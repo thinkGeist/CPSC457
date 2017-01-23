@@ -21,6 +21,15 @@
 
 int signum = 0;
 
+/*** 457 Additions ****/
+extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
+  return syscallStub(SyscallNum::sched_setaffinityEnum, pid, cpusetsize, *mask);
+}
+
+extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
+  return syscallStub(SyscallNum::sched_getaffinityEnum, pid, cpusetsize, *mask);
+}
+
 extern "C" void _KOS_sigwrapper();
 
 extern "C" void _KOS_sighandler(mword s) {
