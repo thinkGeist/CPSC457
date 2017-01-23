@@ -1,0 +1,17 @@
+threadtest.o: threadtest.cc \
+ /home/uga/angela.ranola/kos/src/user/../testoptions.h \
+ /home/uga/angela.ranola/kos/src/user/../include/syscalls.h \
+ /home/uga/angela.ranola/kos/src/user/../include/kostypes.h \
+ /home/uga/angela.ranola/kos/src/user/../include/pthread.h \
+ /home/uga/angela.ranola/kos/src/user/../include/syscalls.h
+systest.o: systest.cc \
+ /home/uga/angela.ranola/kos/src/user/../testoptions.h \
+ /home/uga/angela.ranola/kos/src/user/../include/syscalls.h \
+ /home/uga/angela.ranola/kos/src/user/../include/kostypes.h
+manythread.o: manythread.cc \
+ /home/uga/angela.ranola/kos/src/user/../testoptions.h \
+ /home/uga/angela.ranola/kos/src/user/../include/syscalls.h \
+ /home/uga/angela.ranola/kos/src/user/../include/kostypes.h \
+ /home/uga/angela.ranola/kos/src/user/../include/pthread.h \
+ /home/uga/angela.ranola/kos/src/user/../include/syscalls.h
+kbloop.o: kbloop.cc /home/uga/angela.ranola/kos/src/user/../testoptions.h
