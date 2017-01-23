@@ -34,7 +34,7 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	if(pid != 0)
 		return -EPERM;
 	else{
-		 Runtime::getCurrThread()->setAffinityMask(mask);
+		 Runtime::getCurrThread()->setAffinityMask(*mask);
 		return 0;
 	}
 
