@@ -140,12 +140,12 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
         if(bit == 1) {
           if((Machine::getScheduler(i)->readyCount) < readyCount){
             // Set new ready count, target that core
-            Scheduler *sched = Machine::getScheduler(i);
-            readyCount = *sched -> readyCount;
+            target = Machine::getScheduler(i);
+            readyCount = target -> readyCount;
           }
         }
       }
-      target = *sched;
+    
 
 
    }
