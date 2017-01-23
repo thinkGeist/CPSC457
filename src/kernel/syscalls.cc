@@ -31,10 +31,15 @@
 
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	// Implementation here
+	if(pid != 0)
+		return -EPERM;
+
 }
 
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	// Implementation here
+	if(pid != 0)
+		return -EPERM;
 }
 
 /******* libc functions *******/
