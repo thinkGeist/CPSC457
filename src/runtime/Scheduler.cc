@@ -133,8 +133,8 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
       * switchThread(target) migrates the current thread to
       * specified target's ready queue
       */
-      int processorCount = Machine::getProcessorCount;
-      int readyCount = INT_MAX;
+      mword processorCount = Machine::getProcessorCount;
+      int readyCount = 65536;
       for(int i = 0; i < processorCount; i++) {
         int bit = (affinityMask >> i) & 1;
         if(bit == 1) {
