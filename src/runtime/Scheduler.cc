@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright © 2012-2015 Martin Karsten
+    Copyright ï¿½ 2012-2015 Martin Karsten
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -134,18 +134,19 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
       * specified target's ready queue
       */
       int processorCount = Machine::getProcessorCount();
-      int readyCount = 65536;
+      mword readyCount = 65536;
       for(int i = 0; i < processorCount; i++) {
-        int bit = (affinityMask >> i) & 1;
+        int bit = (affinityMask >> i) && 1;
         if(bit == 1) {
-          if((Machine::getScheduler(i)->readyCount) < readyCount){
+          if((LocalProcessor::getScheduler()->readyCount) < readyCount){
             // Set new ready count, target that core
-            target = Machine::getScheduler(i);
+            target = LocalProcessor::getScheduler();
             readyCount = target -> readyCount;
           }
         }
       }
-    
+
+
 
 
    }

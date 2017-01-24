@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright © 2012-2015 Martin Karsten
+    Copyright ï¿½ 2012-2015 Martin Karsten
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@ int signum = 0;
 
 /*** 457 Additions ****/
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
-  return syscallStub(SyscallNum::sched_setaffinityEnum, pid, cpusetsize, *mask);
+  return syscallStub(SyscallNum::sched_setaffinity, pid, cpusetsize, mword(mask));
 }
 
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
-  return syscallStub(SyscallNum::sched_getaffinityEnum, pid, cpusetsize, *mask);
+  return syscallStub(SyscallNum::sched_getaffinity, pid, cpusetsize, mword(mask));
 }
 
 extern "C" void _KOS_sigwrapper();

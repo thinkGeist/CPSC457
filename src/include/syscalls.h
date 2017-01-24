@@ -30,8 +30,8 @@ namespace SyscallNum {
 
 enum : mword {
   _exit = 0,
-  sched_setaffinityEnum,
-  sched_getaffinityEnum,
+  sched_setaffinity,
+  sched_getaffinity,
   open,
   close,
   read,
