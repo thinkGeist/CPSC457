@@ -37,6 +37,7 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 		return -1;
 	else{
 	  LocalProcessor::getCurrThread()->setAffinityMask(*mask);
+		LocalProcessor::getScheduler()->yield();
 		return 0;
 	}
 
@@ -46,9 +47,10 @@ extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	// Implementation here
 	if(pid != 0)
 		return -EPERM;
-	else
-		return  LocalProcessor::getCurrThread()->getAffinityMask();
-
+	else{
+		*mask = LocalProcessor::getCurrThread()->getAffinityMask();
+		return  0;
+	}
 }
 
 /******* libc functions *******/

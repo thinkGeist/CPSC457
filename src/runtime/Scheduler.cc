@@ -133,24 +133,25 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
       * switchThread(target) migrates the current thread to
       * specified target's ready queue
       */
-      int processorCount = Machine::getProcessorCount();
-      mword readyCount = 65536;
-      for(int i = 0; i < processorCount; i++) {
-        int bit = (affinityMask >> i) && 1;
+      mword processorCount = Machine::getProcessorCount();
+
+      mword min = 65536;
+      for(mword i = 0; i < processorCount; i++) {
+        mword bit = (affinityMask >> i) & 1;
         if(bit == 1) {
-          if((LocalProcessor::getScheduler()->readyCount) < readyCount){
+          //if((LocalProcessor::getScheduler()->readyCount) < min)
+          if((Machine::getScheduler(i)->readyCount) < min){
             // Set new ready count, target that core
-            target = LocalProcessor::getScheduler();
-            readyCount = target -> readyCount;
+            //target = LocalProcessor::getScheduler();
+          //  KOUT::outl("RC: " + Machine::getScheduler(i)->readyCount);
+            //Scheduler *tmp = Machine::getScheduler(i);
+
+            target = Machine::getScheduler(i);
+            min = Machine::getScheduler(i)->readyCount;
           }
         }
       }
-
-
-
-
    }
-
 #if TESTING_ALWAYS_MIGRATE
   if (!target) target = partner;
 #else /* simple load balancing */

@@ -28,7 +28,17 @@ int InitProcess() {
   Process* p3 = knew<Process>();
   p3->exec("manythread");
 **/
-  Process* p4 = knew<Process>();
-  p4->exec("schedAffinityTest");
+  Process* p1 = knew<Process>();
+  p1->exec("progA");
+  Process* p3 = knew<Process>();
+  p3->exec("progC");
+  Process* p5 = knew<Process>();
+  p5->exec("progB");
+  Process* p6 = knew<Process>();
+  p6->exec("progA");
+  Process* p7 = knew<Process>();
+  p7->exec("progB");
+  Process* p8 = knew<Process>();
+  p8->exec("schedAffinityTest");
   return 0;
 }
