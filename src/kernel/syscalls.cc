@@ -22,7 +22,7 @@
 #include "world/Access.h"
 #include "machine/Processor.h"
 #include "machine/Machine.h"
-
+#include <errno.h>
 
 #include "syscalls.h"
 #include "pthread.h"
@@ -32,10 +32,12 @@
 // Set the affinity of the process to an available core specified by the *mask
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	// pid must be 0 to do any work
-	if(pid != 0)
-		return -EPERM;
-	else if(*mask >= (1 << (Machine::getProcessorCount()-1)) // Ask if we need to check for more than 4 cores
-		return -EINVAL;
+	if(pid != 0){
+		return EPERM;
+	}
+	if(*mask >= (mword)(1 << (Machine::getProcessorCount()-1))){ // Ask if we need to check for more than 4 cores
+		return EINVAL;
+	}
 	else{
 		// Otherweise we set the affinity mask and allow the scheduler to pick least busy core
 	  LocalProcessor::getCurrThread()->setAffinityMask(*mask);
@@ -50,7 +52,7 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	// pid must be 0 to continue
 	if(pid != 0)
-		return -EPERM;
+		return EPERM;
 	else{
 		// Set mask to the newly assigned mask
 		*mask = LocalProcessor::getCurrThread()->getAffinityMask();
