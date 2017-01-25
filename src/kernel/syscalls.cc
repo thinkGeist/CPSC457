@@ -29,13 +29,15 @@
 
 /******* 457 Functions ********/
 
+// Set the affinity of the process to an available core specified by the *mask
 extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
-	// Implementation here
+	// pid must be 0 to do any work
 	if(pid != 0)
 		return -EPERM;
-	else if(*mask >= 16)
+	else if(*mask >= 16) // Ask if we need to check for more than 4 cores
 		return -1;
 	else{
+		// Otherweise we set the affinity mask and allow the scheduler to pick least busy core
 	  LocalProcessor::getCurrThread()->setAffinityMask(*mask);
 		LocalProcessor::getScheduler()->yield();
 		return 0;
@@ -43,11 +45,14 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 
 }
 
+// Returns the affinity of the process by setting the mask to point to the new affinity
+// 0 upon success, else error
 extern "C" int sched_getaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
-	// Implementation here
+	// pid must be 0 to continue
 	if(pid != 0)
 		return -EPERM;
 	else{
+		// Set mask to the newly assigned mask
 		*mask = LocalProcessor::getCurrThread()->getAffinityMask();
 		return  0;
 	}

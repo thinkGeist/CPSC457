@@ -133,19 +133,15 @@ void Scheduler::preempt() {               // IRQs disabled, lock count inflated
       * switchThread(target) migrates the current thread to
       * specified target's ready queue
       */
-      mword processorCount = Machine::getProcessorCount();
+      mword processorCount = Machine::getProcessorCount(); // Get the number of processors in the machine
 
-      mword min = 65536;
+      mword min = 65536; // Set initial minimum unreasonably high to guarantee it is greater first
       for(mword i = 0; i < processorCount; i++) {
+        // check if core i is available from mask
         mword bit = (affinityMask >> i) & 1;
         if(bit == 1) {
-          //if((LocalProcessor::getScheduler()->readyCount) < min)
+          // If the queue of the core is smaller than the current target, switch targets
           if((Machine::getScheduler(i)->readyCount) < min){
-            // Set new ready count, target that core
-            //target = LocalProcessor::getScheduler();
-          //  KOUT::outl("RC: " + Machine::getScheduler(i)->readyCount);
-            //Scheduler *tmp = Machine::getScheduler(i);
-
             target = Machine::getScheduler(i);
             min = Machine::getScheduler(i)->readyCount;
           }
