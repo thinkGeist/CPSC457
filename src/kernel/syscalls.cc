@@ -34,8 +34,8 @@ extern "C" int sched_setaffinity(pid_t pid, size_t cpusetsize, cpu_set_t *mask){
 	// pid must be 0 to do any work
 	if(pid != 0)
 		return -EPERM;
-	else if(*mask >= 16) // Ask if we need to check for more than 4 cores
-		return -1;
+	else if(*mask >= (1 << (Machine::getProcessorCount()-1)) // Ask if we need to check for more than 4 cores
+		return -EINVAL;
 	else{
 		// Otherweise we set the affinity mask and allow the scheduler to pick least busy core
 	  LocalProcessor::getCurrThread()->setAffinityMask(*mask);
