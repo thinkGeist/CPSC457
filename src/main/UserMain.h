@@ -9,3 +9,6 @@ static void UserMain() {
   Experiments();
   InitProcess();
 }
+
+static void UserMain() {
+}
